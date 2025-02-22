@@ -13,11 +13,11 @@ function getIntervals($inData){
 
 	foreach((array)$inData as $item){
 
-		$pattern1 = "/^(\D+)(\d+)$/";
+		$pattern1 = "/^([a-zA-Z]+).+(\d+)$/";
 		$pattern2 = "/^(\d{4})\-(\d{2})\-(\d{2})$/";
 		if(preg_match($pattern1, $item, $out))
 		{
-			$month = array_search(trim($out[1]), $months);
+			$month = array_search($out[1], $months);
 			$day = intval($out[2]);
 		}
 		else if(preg_match($pattern2, $item, $out2))

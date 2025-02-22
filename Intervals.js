@@ -8,7 +8,7 @@
 
 function getIntervals(inData){
 
-	const pattern1 = /^(\D+)(\d+)$/;
+	const pattern1 = /^([a-zA-Z]+).+(\d+)$/;
 	const pattern2 = /^(\d{4})\-(\d{2})\-(\d{2})$/;
 
 	const months = getMonths();
@@ -23,7 +23,7 @@ function getIntervals(inData){
 		if(out1)
 		{
 			day = parseInt(out1[2]);
-			month = months.indexOf(out1[1].trim());
+			month = months.indexOf(out1[1]);
 		}
 		else if(out2)
 		{

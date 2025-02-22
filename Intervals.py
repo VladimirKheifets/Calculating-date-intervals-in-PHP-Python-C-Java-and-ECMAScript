@@ -13,14 +13,14 @@ import calendar
 def getintervals(inData):
 
   groups = {}
-  patt1 = re.compile(r'^(\D+)(\d+)$')
+  patt1 = re.compile(r'^([a-zA-Z]+).+(\d+)$')
   patt2 = re.compile(r'^(\d{4})\-(\d{2})\-(\d{2})$')
   intervals = {}
 
   for item in inData:
     if re.match(patt1,item):
       out = patt1.findall(item)
-      month = list(calendar.month_name).index(out[0][0].strip());
+      month = list(calendar.month_name).index(out[0][0]);
       day = int(out[0][1])
     elif re.match(patt2,item):
       out = patt2.findall(item)

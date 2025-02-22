@@ -1,3 +1,11 @@
+
+/*
+    Calculating date intervals in C++
+    Version: 2.0, 2025-02-22
+    Author: Vladimir Kheifets vladimir.kheifets@online.de
+    Copyright © 2025 Vladimir Kheifets All Rights Reserved
+*/
+
 import java.util.*;
 import java.util.regex.*;
 import java.util.function.Function;
@@ -15,7 +23,7 @@ public class Main {
 
         String[] months = new DateFormatSymbols().getMonths();
 
-        Pattern p1 = Pattern.compile("^(\\D+)(\\d+)$");
+        Pattern p1 = Pattern.compile("^([a-zA-Z]+).+(\\d+)$");
         Pattern p2 = Pattern.compile("(\\d{4})\\-(\\d{2})\\-(\\d{2})");
         String mN = "";
         int mI = 0;
@@ -30,8 +38,7 @@ public class Main {
 
             if(b1)
             {
-              mN = m1.group(1).trim();
-              mI = Arrays.asList(months).indexOf(mN);
+              mI = Arrays.asList(months).indexOf(m1.group(1));
               d = Integer.parseInt(m1.group(2));
             }
             else if (b2)

@@ -73,22 +73,19 @@ map< int, vector <string> > getIntervals(vector<string> inData) {
     vector <int> group;
     map< int, vector <string> > intervals;
 
-    regex rS1("^(\\D+)(\\d+)$");
+    regex rS1("^([a-zA-Z]+).+(\\d+)$");
     regex rS2("(\\d{4})\\-(\\d{2})\\-(\\d{2})");
     regex rR("\\ ");
     smatch m;
 
     for (string item : inData)
     {
-        string mN;
         int mI;
         int d;
 
         if(regex_search(item, m, rS1))
         {
-            mN = m[1];
-            mN = regex_replace(mN, rR, "");
-            mI = getMonthNumber(mN);
+            mI = getMonthNumber(m[1]);
             d = stoi(m[2]);
         }
         else if(regex_search(item, m, rS2))
