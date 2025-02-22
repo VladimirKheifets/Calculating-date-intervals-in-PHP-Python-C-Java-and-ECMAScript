@@ -69,11 +69,11 @@ function getIntervals($inData){
 
 	foreach((array)$inData as $item){
 
-		$pattern1 = "/^(\D+)(\d+)$/";
+		$pattern1 = "/^([a-zA-Z]+).+(\d+)$/";
 		$pattern2 = "/^(\d{4})\-(\d{2})\-(\d{2})$/";
 		if(preg_match($pattern1, $item, $out))
 		{
-			$month = array_search(trim($out[1]), $months);
+			$month = array_search($out[1], $months);
 			$day = intval($out[2]);
 		}
 		else if(preg_match($pattern2, $item, $out2))
@@ -222,14 +222,14 @@ import calendar
 def getintervals(inData):
 
   groups = {}
-  patt1 = re.compile(r'^(\D+)(\d+)$')
+  patt1 = re.compile(r'^([a-zA-Z]+).+(\d+)$')
   patt2 = re.compile(r'^(\d{4})\-(\d{2})\-(\d{2})$')
   intervals = {}
 
   for item in inData:
     if re.match(patt1,item):
       out = patt1.findall(item)
-      month = list(calendar.month_name).index(out[0][0].strip());
+      month = list(calendar.month_name).index(out[0][0]);
       day = int(out[0][1])
     elif re.match(patt2,item):
       out = patt2.findall(item)
@@ -427,22 +427,19 @@ map< int, vector <string> > getIntervals(vector<string> inData) {
     vector <int> group;
     map< int, vector <string> > intervals;
 
-    regex rS1("^(\\D+)(\\d+)$");
+    regex rS1("^([a-zA-Z]+).+(\\d+)$");
     regex rS2("(\\d{4})\\-(\\d{2})\\-(\\d{2})");
-    regex rR("\\ ");
+
     smatch m;
 
     for (string item : inData)
     {
-        string mN;
         int mI;
         int d;
 
         if(regex_search(item, m, rS1))
         {
-            mN = m[1];
-            mN = regex_replace(mN, rR, "");
-            mI = getMonthNumber(mN);
+            mI = getMonthNumber(m[1]);
             d = stoi(m[2]);
         }
         else if(regex_search(item, m, rS2))
@@ -560,7 +557,7 @@ public class Main {
 
         Pattern p1 = Pattern.compile("^(\\D+)(\\d+)$");
         Pattern p2 = Pattern.compile("(\\d{4})\\-(\\d{2})\\-(\\d{2})");
-        String mN = "";
+
         int mI = 0;
         int d = 0;
 
@@ -573,8 +570,7 @@ public class Main {
 
             if(b1)
             {
-              mN = m1.group(1).trim();
-              mI = Arrays.asList(months).indexOf(mN);
+              mI = Arrays.asList(months).indexOf(m1.group(1));
               d = Integer.parseInt(m1.group(2));
             }
             else if (b2)
@@ -736,7 +732,7 @@ public class Main {
 
 function getIntervals(inData){
 
-	const pattern1 = /^(\D+)(\d+)$/;
+	const pattern1 = /^([a-zA-Z]+).+(\d+)$/;
 	const pattern2 = /^(\d{4})\-(\d{2})\-(\d{2})$/;
 
 	const months = getMonths();
@@ -751,7 +747,7 @@ function getIntervals(inData){
 		if(out1)
 		{
 			day = parseInt(out1[2]);
-			month = months.indexOf(out1[1].trim());
+			month = months.indexOf(out1[1]);
 		}
 		else if(out2)
 		{
