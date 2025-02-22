@@ -11,6 +11,8 @@ function getIntervals($inData){
 
 	$months = getMonths();
 
+	$groups = [];
+
 	foreach((array)$inData as $item){
 
 		$pattern1 = "/^([a-zA-Z]+).+(\d+)$/";
@@ -30,6 +32,9 @@ function getIntervals($inData){
 
 		$groups[$month][] = $day;
 	}
+
+  if(empty($groups))
+  	return false;
 
 	ksort($groups);
 
@@ -94,7 +99,6 @@ function getMonths(){
 
 $data = ["January 8", "May 11", "January 3","January 1", "April 2", "January 4","January 5", "May 11","February 24", "April 1", "February 25", "February 26", "March 12", "January 7", "March 13", "January 3", "March 14", "February 24", "April 3","May 10", "May 12","February 23"];
 
-
 $intervals = getIntervals($data);
 viewIntervals($intervals);
 
@@ -147,5 +151,3 @@ viewIntervals($intervals);
 	10 - 12
 
 */
-
-?>

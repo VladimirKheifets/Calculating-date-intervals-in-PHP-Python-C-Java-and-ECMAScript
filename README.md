@@ -57,86 +57,91 @@ implemented in PHP, Python, C++, Java and ECMAScript.
 <?php
 
 /*
-	Calculating date intervals in PHP
-	Version: 2.0, 2025-02-22
-	Author: Vladimir Kheifets vladimir.kheifets@online.de
-	Copyright © 2025 Vladimir Kheifets All Rights Reserved
+    Calculating date intervals in PHP
+    Version: 2.0, 2025-02-22
+    Author: Vladimir Kheifets vladimir.kheifets@online.de
+    Copyright © 2025 Vladimir Kheifets All Rights Reserved
 */
 
 function getIntervals($inData){
 
-	$months = getMonths();
+    $months = getMonths();
 
-	foreach((array)$inData as $item){
+    $groups = [];
 
-		$pattern1 = "/^([a-zA-Z]+).+(\d+)$/";
-		$pattern2 = "/^(\d{4})\-(\d{2})\-(\d{2})$/";
-		if(preg_match($pattern1, $item, $out))
-		{
-			$month = array_search($out[1], $months);
-			$day = intval($out[2]);
-		}
-		else if(preg_match($pattern2, $item, $out2))
-		{
-			$month = intval($out2[2])-1;
-			$day = intval($out2[3]);
-		}
-		else
-			return false;
+    foreach((array)$inData as $item){
 
-		$groups[$month][] = $day;
-	}
+        $pattern1 = "/^([a-zA-Z]+).+(\d+)$/";
+        $pattern2 = "/^(\d{4})\-(\d{2})\-(\d{2})$/";
+        if(preg_match($pattern1, $item, $out))
+        {
+            $month = array_search($out[1], $months);
+            $day = intval($out[2]);
+        }
+        else if(preg_match($pattern2, $item, $out2))
+        {
+            $month = intval($out2[2])-1;
+            $day = intval($out2[3]);
+        }
+        else
+            return false;
 
-	ksort($groups);
+        $groups[$month][] = $day;
+    }
 
-	foreach($groups as $preff => $group){
+  if(empty($groups))
+    return false;
 
-		sort($group);
+    ksort($groups);
 
-		//---------------------------------
-		$interval = "";
+    foreach($groups as $preff => $group){
+
+        sort($group);
+
+        //---------------------------------
+        $interval = "";
         $numberBefor = 0;
-		foreach($group as  $number)
-		{
-			if($numberBefor == 0)
-				$interval = $number;
-			else
-			{
-				if(($number - $numberBefor) > 1)
-				{
-					if($interval != $numberBefor)
-						$interval .= " - $numberBefor";
-					$intervals[$preff][] = $interval;
-					$interval = $number;
-				}
-			}
+        foreach($group as  $number)
+        {
+            if($numberBefor == 0)
+                $interval = $number;
+            else
+            {
+                if(($number - $numberBefor) > 1)
+                {
+                    if($interval != $numberBefor)
+                        $interval .= " - $numberBefor";
+                    $intervals[$preff][] = $interval;
+                    $interval = $number;
+                }
+            }
             $numberBefor = $number;
-		}
-		if($interval != $number)
-			$interval .= " - $number";
-		$intervals[$preff][] = $interval;
-	}
-	return $intervals;
+        }
+        if($interval != $number)
+            $interval .= " - $number";
+        $intervals[$preff][] = $interval;
+    }
+    return $intervals;
 }
 
 //---------------------------------------------------------
 
 function viewIntervals($intervals){
-	if($intervals)
-	{
-		$months = getMonths();
-		$out = "-----------------------------------<br>";
-		$out .= "Intervals:<br>";
-		foreach($intervals  as $month => $interval){
-			$out .= "Days in  {$months[$month]}:<br>";
-			foreach($interval as $numberDays)
-			{
-				$out .= "$numberDays<br>";
-			}
-			$out .= "<br>";
-		}
-		echo $out;
-	}
+    if($intervals)
+    {
+        $months = getMonths();
+        $out = "-----------------------------------<br>";
+        $out .= "Intervals:<br>";
+        foreach($intervals  as $month => $interval){
+            $out .= "Days in  {$months[$month]}:<br>";
+            foreach($interval as $numberDays)
+            {
+                $out .= "$numberDays<br>";
+            }
+            $out .= "<br>";
+        }
+        echo $out;
+    }
 }
 
 //---------------------------------------------------------
@@ -149,7 +154,6 @@ function getMonths(){
 //---------------------------------------------------------
 
 $data = ["January 8", "May 11", "January 3","January 1", "April 2", "January 4","January 5", "May 11","February 24", "April 1", "February 25", "February 26", "March 12", "January 7", "March 13", "January 3", "March 14", "February 24", "April 3","May 10", "May 12","February 23"];
-
 
 $intervals = getIntervals($data);
 viewIntervals($intervals);
@@ -165,42 +169,42 @@ viewIntervals($intervals);
 /*
 
 -----------------------------------
-	Intervals:
-	Days in January:
-	1
-	3 - 5
-	7 - 8
+    Intervals:
+    Days in January:
+    1
+    3 - 5
+    7 - 8
 
-	Days in February:
-	23 - 26
+    Days in February:
+    23 - 26
 
-	Days in March:
-	12 - 14
+    Days in March:
+    12 - 14
 
-	Days in April:
-	1 - 3
+    Days in April:
+    1 - 3
 
-	Days in May:
-	10 - 12
+    Days in May:
+    10 - 12
 
-	-----------------------------------
-	Intervals:
-	Days in January:
-	01
-	03 - 05
-	07 - 08
+    -----------------------------------
+    Intervals:
+    Days in January:
+    01
+    03 - 05
+    07 - 08
 
-	Days in February:
-	23 - 26
+    Days in February:
+    23 - 26
 
-	Days in March:
-	12 - 14
+    Days in March:
+    12 - 14
 
-	Days in April:
-	01 - 03
+    Days in April:
+    01 - 03
 
-	Days in May:
-	10 - 12
+    Days in May:
+    10 - 12
 
 */
 ```
