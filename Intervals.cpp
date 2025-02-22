@@ -71,7 +71,7 @@ map< int, vector <string> > getIntervals(vector<string> inData) {
     string valBefor;
     string val;
     vector <int> group;
-    map< int, vector <string> > intervals;
+    map< int, vector <string> > intervals = {};
 
     regex rS1("^([a-zA-Z]+).+(\\d+)$");
     regex rS2("(\\d{4})\\-(\\d{2})\\-(\\d{2})");
