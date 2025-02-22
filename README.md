@@ -555,7 +555,7 @@ public class Main {
 
         String[] months = new DateFormatSymbols().getMonths();
 
-        Pattern p1 = Pattern.compile("^(\\D+)(\\d+)$");
+         Pattern p1 = Pattern.compile("^([a-zA-Z]+).+(\\d+)$");
         Pattern p2 = Pattern.compile("(\\d{4})\\-(\\d{2})\\-(\\d{2})");
 
         int mI = 0;
